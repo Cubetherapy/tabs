@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Healthcare Billing Metrics Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #185ee0;
+            --secondary-color: #e6eef9;
+        }
+
+        *, *:after, *:before {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Inter", sans-serif;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            padding: 20px;
+        }
+
+        .tabs {
+            display: flex;
+            position: relative;
+            background-color: #fff;
+            box-shadow: 0 0 1px 0 rgba(24, 94, 224, 0.15), 0 6px 12px 0 rgba(24, 94, 224, 0.15);
+            padding: 0.75rem;
+            border-radius: 0px;
+            overflow: hidden;
+            width: calc(100% - 1.5rem);
+            height: auto;
+        }
+
+        input[type="radio"] {
+            display: none;
+        }
+
+        .tab {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 54px;
+            min-width: 220px;
+            padding: 0 10px;
+            font-size: 1rem;
+            font-weight: 500;
+            align-items: center;
+            color: grey;
+            cursor: pointer;
+            transition: color 0.15s ease-in;
+        }
+
+        .notification {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 2rem;
+            height: 2rem;
+            margin-left: 10px;
+            font-size: 0.8rem;
+            border-radius: 100%;
+            background-color: var(--secondary-color);
+            color: grey;
+            transition: background-color 0.15s ease-in, color 0.15s ease-in;
+        }
+
+        input[type="radio"]:checked + label {
+            color: var(--primary-color);
+        }
+
+        input[type="radio"]:checked + label > .notification {
+            background-color: var(--primary-color);
+            color: #fff;
+        }
+
+        .glider {
+            position: absolute;
+            height: 54px;
+            width: 220px;
+            background-color: rgba(10, 110, 142, 0.2);
+            border: 2px solid #0a6e8e;
+            z-index: 1;
+            border-radius: 0px;
+            transition: transform 0.25s ease-out;
+        }
+
+        input[id="radio-1"]:checked ~ .glider { transform: translateX(0%); }
+        input[id="radio-2"]:checked ~ .glider { transform: translateX(100%); }
+        input[id="radio-3"]:checked ~ .glider { transform: translateX(200%); }
+
+        .content {
+            display: none;
+            padding: 30px;
+            background: white;
+            border-radius: 0px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin-top: 30px;
+            text-align: center;
+            width: calc(100% - 1.5rem);
+            height: auto;
+            font-size: 1.1rem;
+            color: #0a6e8e;
+            transition: all 0.3s ease;
+        }
+
+        .content.active {
+            display: block;
+        }
+
+        @media (max-width: 700px) {
+            .tabs, .content {
+                transform: scale(0.6);
+                width: calc(100% - 1.5rem);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="tabs">
+        <input type="radio" id="radio-1" name="tabs" checked />
+        <label class="tab" for="radio-1">CCR<span class="notification">98.9%</span></label>
+        <input type="radio" id="radio-2" name="tabs" />
+        <label class="tab" for="radio-2">AR Days<span class="notification">18</span></label>
+        <input type="radio" id="radio-3" name="tabs" />
+        <label class="tab" for="radio-3">Denial Rate<span class="notification">1.9%</span></label>
+        <div class="glider"></div>
+    </div>
+    <div class="content active" id="content-1">
+        <h2>Claims Collection Rate (CCR)</h2>
+        <p>Cube Therapy Billing excels with a remarkable 98.9% CCR, well above the industry average of 85%, ensuring maximum reimbursement efficiency and minimizing financial disruption for healthcare providers.</p>
+    </div>
+    <div class="content" id="content-2">
+        <h2>Accounts Receivable Days (AR Days)</h2>
+        <p>With only 18 AR days for claims over 90 days, Cube Therapy Billing showcases exceptional financial control. This performance significantly betters the industry average of 50 days, accelerating cash flow and surpassing typical industry benchmarks.</p>
+    </div>
+    <div class="content" id="content-3">
+        <h2>Denial Rate</h2>
+        <p>Achieving an impressive 1.9% denial rate, Cube Therapy Billing sets a high standard in revenue cycle management. This rate is far lower than the industry average of 5-10%, effectively reducing typical financial losses associated with claim rejections.</p>
+    </div>
+</div>
+
+<script defer>
+    document.querySelectorAll('input[type="radio"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            document.querySelectorAll('.content').forEach(content => {
+                if ('content-' + this.id.split('-')[1] === content.id) {
+                    content.classList.add('active');
+                } else {
+                    content.classList.remove('active');
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
